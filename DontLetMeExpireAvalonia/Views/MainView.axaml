@@ -3,14 +3,54 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:DontLetMeExpireAvalonia.ViewModels"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="800"
              x:Class="DontLetMeExpireAvalonia.Views.MainView"
-             x:DataType="vm:MainViewModel">
+             x:DataType="vm:MainViewModel"
+			 Background="#f5f7fa"
+			 Padding="16">
   <Design.DataContext>
     <!-- This only sets the DataContext for the previewer in an IDE,
          to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
     <vm:MainViewModel />
   </Design.DataContext>
 
-  <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+	<ScrollViewer>
+		<!-- Currently there is no Row/ Columnspacing in Avalonia
+		      this will probably come with 11.3
+			  see: https://github.com/AvaloniaUI/Avalonia/pull/18077 
+			  as a workaround we use margin for the child elements
+		-->
+		<Grid RowDefinitions="100,100,Auto,*,48" 
+			  ColumnDefinitions="*,*">
+			<Rectangle Grid.Row="0" Grid.Column="0" Fill="DarkGray" Margin="0,0,8,8"/>
+			<Rectangle Grid.Row="0" Grid.Column="1" Fill="DarkGreen" Margin="8,0,0,8"/>
+			<Rectangle Grid.Row="1" Grid.Column="0" Fill="DarkOrange" Margin="0,8,8,0"/>
+			<Rectangle Grid.Row="1" Grid.Column="1" Fill="DarkRed" Margin="8,8,0,0"/>
+			<TextBlock Grid.Row="2" Grid.ColumnSpan="2" Margin="0,24,0,0" Text="Meine Lagerorte" FontSize="24"  />
+			<StackPanel Grid.Row="3" Grid.ColumnSpan="2" Spacing="8" Margin="0,8,0,8">
+				<Rectangle Fill="LightGray" Height="50"/>
+				<Rectangle Fill="LightGray" Height="50"/>
+				<Rectangle Fill="LightGray" Height="50"/>
+			</StackPanel>
+			<Button Grid.Row="4" Grid.Column="0" 
+					Content="Eintrag hinzufügen"
+                    Background="#3d6dcc"
+					Foreground="White"
+					HorizontalAlignment="Stretch"
+					HorizontalContentAlignment="Center"
+					Margin="0,0,8,0"
+					Padding="8"/>
+			<Button Grid.Row="4" Grid.Column="1" 
+					Content="Neuen Ort anlegen"
+					Background="White"
+					BorderThickness="1"
+					BorderBrush="#3d6dcc"
+					Foreground="#3d6dcc"
+					HorizontalAlignment="Stretch"
+					HorizontalContentAlignment="Center"
+					Margin="8,0,0,0"
+					Padding="8"/>
+
+		</Grid>
+	</ScrollViewer>
 </UserControl>
