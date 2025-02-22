@@ -1,0 +1,39 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:vm="clr-namespace:DontLetMeExpireAvalonia.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="700"
+             x:Class="DontLetMeExpireAvalonia.Views.ItemView">
+	<Design.DataContext>
+		<!-- This only sets the DataContext for the previewer in an IDE,
+         to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+		<vm:ItemViewModel />
+	</Design.DataContext>
+	<ScrollViewer>
+		<Grid RowDefinitions="300,auto">
+			<Rectangle Grid.Row="0" Fill="AliceBlue" Height="300" />
+			<Button Grid.Row="0" Margin="16" HorizontalAlignment="Right" Content="Bild löschen" VerticalAlignment="Top"/>
+			<StackPanel Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center">
+				<Image Source="/Assets/avalonia-logo.ico" Height="48" Width="48"/>
+				<TextBlock Text="Tippe hier, um ein Bild hinzuzufügen"/>
+			</StackPanel>
+			<StackPanel Grid.Row="1" Spacing="8" Margin="16">
+				<TextBlock Text="Name"/>
+				<TextBox />
+				<TextBlock Margin="0,8,0,0" Text="Lagerort"/>
+				<ComboBox HorizontalAlignment="Stretch">
+					<ComboBoxItem>Gefrierschrank</ComboBoxItem>
+					<ComboBoxItem>Kühlschrank</ComboBoxItem>
+					<ComboBoxItem>Vorratsschrank</ComboBoxItem>
+				</ComboBox>
+				<TextBlock Margin="0,8,0,0" Text="Verfallsdatum"/>
+				<CalendarDatePicker/>
+				<TextBlock Margin="0,8,0,0" Text="Menge" />
+				<TextBox TextInputOptions.ContentType="Number" />
+				<Button Margin="0,8,0,0" Content="Speichern" />
+			</StackPanel>
+		</Grid>
+
+	</ScrollViewer>
+</UserControl>

@@ -8,11 +8,11 @@
              x:DataType="vm:MainViewModel"
 			 Background="#f5f7fa"
 			 Padding="16">
-  <Design.DataContext>
-    <!-- This only sets the DataContext for the previewer in an IDE,
+	<Design.DataContext>
+		<!-- This only sets the DataContext for the previewer in an IDE,
          to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
-    <vm:MainViewModel />
-  </Design.DataContext>
+		<vm:MainViewModel />
+	</Design.DataContext>
 
 	<ScrollViewer>
 		<!-- Currently there is no Row/ Columnspacing in Avalonia
@@ -20,19 +20,274 @@
 			  see: https://github.com/AvaloniaUI/Avalonia/pull/18077 
 			  as a workaround we use margin for the child elements
 		-->
-		<Grid RowDefinitions="100,100,Auto,*,48" 
+		<Grid RowDefinitions="100,100,Auto,*,48"
 			  ColumnDefinitions="*,*">
-			<Rectangle Grid.Row="0" Grid.Column="0" Fill="DarkGray" Margin="0,0,8,8"/>
-			<Rectangle Grid.Row="0" Grid.Column="1" Fill="DarkGreen" Margin="8,0,0,8"/>
-			<Rectangle Grid.Row="1" Grid.Column="0" Fill="DarkOrange" Margin="0,8,8,0"/>
-			<Rectangle Grid.Row="1" Grid.Column="1" Fill="DarkRed" Margin="8,8,0,0"/>
+
+			<Border Grid.Row="0"
+					Grid.Column="0"
+					Background="White"
+					BorderThickness="1"
+					BorderBrush="DarkGray"
+					CornerRadius="8"
+					
+					Margin="0,0,8,8">
+				<Grid
+					  ColumnDefinitions="*,*"
+    				  Margin="8"
+					  RowDefinitions="Auto,*">
+					<Image Source="avares://DontLetMeExpireAvalonia/Assets/avalonia-logo.ico"
+						   Height="40"
+						   HorizontalAlignment="Left"/>
+					<!--  Anzeige der Anzahl der Einträge, rechtsbündig ausgerichtet  -->
+					<TextBlock
+						Grid.Row="0"
+						Grid.Column="1"
+						FontWeight="Bold"
+						FontSize="20"
+						Foreground="DarkGray"
+						HorizontalAlignment="Right"
+						Text="12"/>
+
+					<!--  Anzeige der Beschreibung  -->
+					<TextBlock
+						Grid.Row="1"
+						Grid.Column="0"
+						Grid.ColumnSpan="2"
+						FontSize="20"
+						Text="Mein Vorrat"
+						VerticalAlignment="Bottom" />
+				</Grid>
+			</Border>
+
+			<Border Grid.Row="0"
+				Grid.Column="1"
+				Background="White"
+				BorderThickness="1"
+				BorderBrush="DarkGreen"
+				CornerRadius="8"
+					
+				Margin="8,0,0,8">
+				<Grid
+					  ColumnDefinitions="*,*"
+    				  Margin="8"
+					  RowDefinitions="Auto,*">
+					<Image Source="avares://DontLetMeExpireAvalonia/Assets/avalonia-logo.ico"
+						   Height="40"
+						   HorizontalAlignment="Left"/>
+					<!--  Anzeige der Anzahl der Einträge, rechtsbündig ausgerichtet  -->
+					<TextBlock
+						Grid.Row="0"
+						Grid.Column="1"
+						FontWeight="Bold"
+						FontSize="20"
+						Foreground="DarkGreen"
+						HorizontalAlignment="Right"
+						Text="3"/>
+
+					<!--  Anzeige der Beschreibung  -->
+					<TextBlock
+						Grid.Row="1"
+						Grid.Column="0"
+						Grid.ColumnSpan="2"
+						FontSize="20"
+						Text="Läuft bald ab"
+						VerticalAlignment="Bottom" />
+				</Grid>
+			</Border>
+
+			<Border Grid.Row="1"
+					Grid.Column="0"
+					Background="White"
+					BorderThickness="1"
+					BorderBrush="DarkOrange"
+					CornerRadius="8"
+					
+					Margin="0,8,8,0">
+				<Grid
+					  ColumnDefinitions="*,*"
+    				  Margin="8"
+					  RowDefinitions="Auto,*">
+					<Image Source="avares://DontLetMeExpireAvalonia/Assets/avalonia-logo.ico"
+						   Height="40"
+						   HorizontalAlignment="Left"/>
+					<!--  Anzeige der Anzahl der Einträge, rechtsbündig ausgerichtet  -->
+					<TextBlock
+						Grid.Row="0"
+						Grid.Column="1"
+						FontWeight="Bold"
+						FontSize="20"
+						Foreground="DarkOrange"
+						HorizontalAlignment="Right"
+						Text="1"/>
+
+					<!--  Anzeige der Beschreibung  -->
+					<TextBlock
+						Grid.Row="1"
+						Grid.Column="0"
+						Grid.ColumnSpan="2"
+						FontSize="20"
+						Text="Läuft heute ab"
+						VerticalAlignment="Bottom" />
+				</Grid>
+			</Border>
+
+			<Border Grid.Row="1"
+				Grid.Column="1"
+				Background="White"
+				BorderThickness="1"
+				BorderBrush="DarkRed"
+				CornerRadius="8"
+					
+				Margin="8,8,0,0">
+				<Grid
+					  ColumnDefinitions="*,*"
+    				  Margin="8"
+					  RowDefinitions="Auto,*">
+					<Image Source="avares://DontLetMeExpireAvalonia/Assets/avalonia-logo.ico"
+						   Height="40"
+						   HorizontalAlignment="Left"/>
+					<!--  Anzeige der Anzahl der Einträge, rechtsbündig ausgerichtet  -->
+					<TextBlock
+						Grid.Row="0"
+						Grid.Column="1"
+						FontWeight="Bold"
+						FontSize="20"
+						Foreground="DarkRed"
+						HorizontalAlignment="Right"
+						Text="4"/>
+
+					<!--  Anzeige der Beschreibung  -->
+					<TextBlock
+						Grid.Row="1"
+						Grid.Column="0"
+						Grid.ColumnSpan="2"
+						FontSize="20"
+						Text="Abgelaufen"
+						VerticalAlignment="Bottom" />
+				</Grid>
+			</Border>
+
+
+
+
 			<TextBlock Grid.Row="2" Grid.ColumnSpan="2" Margin="0,24,0,0" Text="Meine Lagerorte" FontSize="24"  />
 			<StackPanel Grid.Row="3" Grid.ColumnSpan="2" Spacing="8" Margin="0,8,0,8">
-				<Rectangle Fill="LightGray" Height="50"/>
-				<Rectangle Fill="LightGray" Height="50"/>
-				<Rectangle Fill="LightGray" Height="50"/>
+				<Border Background="White"
+						CornerRadius="16"
+						BorderThickness="0"
+						Margin="1,0,1,9"
+						 BoxShadow="0 4 8 0 DarkGray"
+						>
+					<Grid Margin="8"
+						  ColumnDefinitions="48,*,24"
+						  RowDefinitions="24,24">
+						<Ellipse Fill="AliceBlue"
+								 Grid.RowSpan="2"/>
+						<Image Source="avares://DontLetMeExpireAvalonia/Assets/avalonia-logo.ico"
+						   Height="40"
+						   HorizontalAlignment="Center"
+						   VerticalAlignment="Center"
+						   Grid.RowSpan="2"/>
+						<TextBlock
+							Margin="8,0"
+							Grid.Column="1"
+							FontWeight="Bold"
+							Text="Gefrierschrank" />
+						<TextBlock
+							Margin="8,0"
+							Grid.Column="1"
+							Grid.Row="1"
+							Foreground="DarkGray"
+							Text="3 Einträge" />
+
+						<TextBlock
+                            Grid.RowSpan="2"
+                            Grid.Column="2"
+                            Margin="0,0,8,0"
+                            FontSize="36"
+                            HorizontalAlignment="Right"
+                            Text="›"
+                            VerticalAlignment="Center" />
+					</Grid>
+				</Border>
+				<Border Background="White"
+						CornerRadius="16"
+						BorderThickness="0"
+						Margin="1,0,1,9"
+						 BoxShadow="0 4 8 0 DarkGray"
+						>
+					<Grid Margin="8"
+						  ColumnDefinitions="48,*,24"
+						  RowDefinitions="24,24">
+						<Ellipse Fill="AliceBlue"
+								 Grid.RowSpan="2"/>
+						<Image Source="avares://DontLetMeExpireAvalonia/Assets/avalonia-logo.ico"
+						   Height="40"
+						   HorizontalAlignment="Center"
+						   VerticalAlignment="Center"
+						   Grid.RowSpan="2"/>
+						<TextBlock
+							Margin="8,0"
+							Grid.Column="1"
+							FontWeight="Bold"
+							Text="Kühlschrank" />
+						<TextBlock
+							Margin="8,0"
+							Grid.Column="1"
+							Grid.Row="1"
+							Foreground="DarkGray"
+							Text="5 Einträge" />
+
+						<TextBlock
+                            Grid.RowSpan="2"
+                            Grid.Column="2"
+                            Margin="0,0,8,0"
+                            FontSize="36"
+                            HorizontalAlignment="Right"
+                            Text="›"
+                            VerticalAlignment="Center" />
+					</Grid>
+				</Border>
+				<Border Background="White"
+						CornerRadius="16"
+						BorderThickness="0"
+						Margin="1,0,1,9"
+						 BoxShadow="0 4 8 0 DarkGray"
+						>
+					<Grid Margin="8"
+						  ColumnDefinitions="48,*,24"
+						  RowDefinitions="24,24">
+						<Ellipse Fill="AliceBlue"
+								 Grid.RowSpan="2"/>
+						<Image Source="avares://DontLetMeExpireAvalonia/Assets/avalonia-logo.ico"
+						   Height="40"
+						   HorizontalAlignment="Center"
+						   VerticalAlignment="Center"
+						   Grid.RowSpan="2"/>
+						<TextBlock
+							Margin="8,0"
+							Grid.Column="1"
+							FontWeight="Bold"
+							Text="Vorratsschrank" />
+						<TextBlock
+							Margin="8,0"
+							Grid.Column="1"
+							Grid.Row="1"
+							Foreground="DarkGray"
+							Text="4 Einträge" />
+
+						<TextBlock
+                            Grid.RowSpan="2"
+                            Grid.Column="2"
+                            Margin="0,0,8,0"
+                            FontSize="36"
+                            HorizontalAlignment="Right"
+                            Text="›"
+                            VerticalAlignment="Center" />
+					</Grid>
+				</Border>
 			</StackPanel>
-			<Button Grid.Row="4" Grid.Column="0" 
+			<Button Grid.Row="4" Grid.Column="0"
 					Content="Eintrag hinzufügen"
                     Background="#3d6dcc"
 					Foreground="White"
@@ -40,7 +295,7 @@
 					HorizontalContentAlignment="Center"
 					Margin="0,0,8,0"
 					Padding="8"/>
-			<Button Grid.Row="4" Grid.Column="1" 
+			<Button Grid.Row="4" Grid.Column="1"
 					Content="Neuen Ort anlegen"
 					Background="White"
 					BorderThickness="1"

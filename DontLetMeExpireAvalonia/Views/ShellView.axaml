@@ -1,0 +1,46 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:converters="clr-namespace:DontLetMeExpireAvalonia.Converters"
+			 xmlns:models="clr-namespace:DontLetMeExpireAvalonia.Models"
+			 xmlns:vm="clr-namespace:DontLetMeExpireAvalonia.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="700"
+             x:Class="DontLetMeExpireAvalonia.Views.ShellView"
+			 x:DataType="vm:ShellViewModel"
+             TopLevel.AutoSafeAreaPadding="True">
+	<Design.DataContext>
+		<vm:ShellViewModel/>
+	</Design.DataContext>
+	<SplitView IsPaneOpen="{Binding FlyoutIsPresented}"
+			   CompactPaneLength="40"
+			   OpenPaneLength="300"
+			   DisplayMode="CompactOverlay"
+			   PaneBackground="#f5f7fa"
+			   >
+		<SplitView.Pane>
+			<StackPanel>
+				<Button Command="{Binding ToggleFlyoutCommand}">
+					<PathIcon Height="11" Data="{StaticResource Menu}"/>
+				</Button>
+				<ListBox ItemsSource="{Binding FlyoutItems}" SelectedItem="{Binding ActiveFlyoutItem}">
+					<ListBox.ItemTemplate>
+						<DataTemplate DataType="{x:Type models:FlyoutItem}">
+							<StackPanel Orientation="Horizontal" Spacing="16">
+								<PathIcon Data="{Binding Icon, Converter={x:Static converters:TypeConverters.IconConverter}}"
+										  Width="14" />
+								<TextBlock Text="{Binding Title}"/>
+							</StackPanel>
+						</DataTemplate>
+					</ListBox.ItemTemplate>
+				</ListBox>
+			</StackPanel>
+		</SplitView.Pane>
+		<SplitView.Content>
+			<DockPanel>
+				<TextBlock Text="{Binding Content.Title}"/>
+				<TransitioningContentControl Content="{Binding Content}"/>
+			</DockPanel>
+		</SplitView.Content>
+	</SplitView>
+</UserControl>

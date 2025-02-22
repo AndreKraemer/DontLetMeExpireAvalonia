@@ -2,6 +2,8 @@
 
 namespace DontLetMeExpireAvalonia.ViewModels;
 
-public abstract class ViewModelBase : ObservableObject
+public abstract partial class ViewModelBase : ObservableObject
 {
+    [ObservableProperty]
+    private string _title;
 }

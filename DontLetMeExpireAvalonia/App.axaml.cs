@@ -4,8 +4,11 @@ using Avalonia.Data.Core;
 using Avalonia.Data.Core.Plugins;
 using System.Linq;
 using Avalonia.Markup.Xaml;
+using Avalonia.Media;
 using DontLetMeExpireAvalonia.ViewModels;
 using DontLetMeExpireAvalonia.Views;
+using CommunityToolkit.Mvvm.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace DontLetMeExpireAvalonia;
 
@@ -18,6 +21,14 @@ public partial class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
+        // Configure IoC
+        var services = new ServiceCollection();
+        services.AddSingleton<ShellViewModel>();
+        services.AddTransient<MainViewModel>();
+        services.AddTransient<ItemViewModel>();
+        var provider = services.BuildServiceProvider();
+        Ioc.Default.ConfigureServices(provider);
+
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             // Avoid duplicate validations from both Avalonia and the CommunityToolkit. 
@@ -25,14 +36,14 @@ public partial class App : Application
             DisableAvaloniaDataAnnotationValidation();
             desktop.MainWindow = new MainWindow
             {
-                DataContext = new MainViewModel()
+                DataContext = provider.GetRequiredService<ShellViewModel>()
             };
         }
         else if (ApplicationLifetime is ISingleViewApplicationLifetime singleViewPlatform)
         {
-            singleViewPlatform.MainView = new MainView
+            singleViewPlatform.MainView = new ShellView
             {
-                DataContext = new MainViewModel()
+                DataContext = provider.GetRequiredService<ShellViewModel>()
             };
         }
 
