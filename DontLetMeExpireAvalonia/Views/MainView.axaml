@@ -3,6 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:DontLetMeExpireAvalonia.ViewModels"
+			 xmlns:controls="clr-namespace:DontLetMeExpireAvalonia.Controls"
              mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="800"
              x:Class="DontLetMeExpireAvalonia.Views.MainView"
              x:DataType="vm:MainViewModel"
@@ -23,153 +24,45 @@
 		<Grid RowDefinitions="100,100,Auto,*,48"
 			  ColumnDefinitions="*,*">
 
-			<Border Grid.Row="0"
-					Grid.Column="0"
-					Background="White"
-					BorderThickness="1"
-					BorderBrush="DarkGray"
-					CornerRadius="8"
-					
-					Margin="0,0,8,8">
-				<Grid
-					  ColumnDefinitions="*,*"
-    				  Margin="8"
-					  RowDefinitions="Auto,*">
-					<Image Source="avares://DontLetMeExpireAvalonia/Assets/avalonia-logo.ico"
-						   Height="40"
-						   HorizontalAlignment="Left"/>
-					<!--  Anzeige der Anzahl der Einträge, rechtsbündig ausgerichtet  -->
-					<TextBlock
-						Grid.Row="0"
-						Grid.Column="1"
-						FontWeight="Bold"
-						FontSize="20"
-						Foreground="DarkGray"
-						HorizontalAlignment="Right"
-						Text="{Binding StockCount}"/>
+			<controls:DashboardTile
+				Margin="0,0,8,8"
+				Grid.Row="0"
+				Grid.Column="0"
+				Count="{Binding StockCount}"
+				BorderColor="LightGray"
+				Icon="avares://DontLetMeExpireAvalonia/Assets/avalonia-logo.ico"
+				Text="Mein Vorrat" />
 
-					<!--  Anzeige der Beschreibung  -->
-					<TextBlock
-						Grid.Row="1"
-						Grid.Column="0"
-						Grid.ColumnSpan="2"
-						FontSize="20"
-						Text="Mein Vorrat"
-						VerticalAlignment="Bottom" />
-				</Grid>
-			</Border>
-
-			<Border Grid.Row="0"
+			<controls:DashboardTile
+				Margin="8,0,0,8"
+				Grid.Row="0"
 				Grid.Column="1"
-				Background="White"
-				BorderThickness="1"
-				BorderBrush="DarkGreen"
-				CornerRadius="8"
-					
-				Margin="8,0,0,8">
-				<Grid
-					  ColumnDefinitions="*,*"
-    				  Margin="8"
-					  RowDefinitions="Auto,*">
-					<Image Source="avares://DontLetMeExpireAvalonia/Assets/avalonia-logo.ico"
-						   Height="40"
-						   HorizontalAlignment="Left"/>
-					<!--  Anzeige der Anzahl der Einträge, rechtsbündig ausgerichtet  -->
-					<TextBlock
-						Grid.Row="0"
-						Grid.Column="1"
-						FontWeight="Bold"
-						FontSize="20"
-						Foreground="DarkGreen"
-						HorizontalAlignment="Right"
-						Text="{Binding ExpiringSoonCount}"/>
+				BorderColor="DarkGreen"
+				Count="{Binding ExpiringSoonCount}"
+				CountColor="DarkGreen"
+				Icon="avares://DontLetMeExpireAvalonia/Assets/avalonia-logo.ico"
+				Text="Läuft bald ab" />
 
-					<!--  Anzeige der Beschreibung  -->
-					<TextBlock
-						Grid.Row="1"
-						Grid.Column="0"
-						Grid.ColumnSpan="2"
-						FontSize="20"
-						Text="Läuft bald ab"
-						VerticalAlignment="Bottom" />
-				</Grid>
-			</Border>
+			<controls:DashboardTile
+				Margin="0,8,8,0"
+				Grid.Row="1"
+				Grid.Column="0"
+				BorderColor="DarkOrange"
+				Count="{Binding ExpiresTodayCount}"
+				CountColor="DarkOrange"
+				Icon="avares://DontLetMeExpireAvalonia/Assets/avalonia-logo.ico"
+				Text="Läuft heute ab" />
 
-			<Border Grid.Row="1"
-					Grid.Column="0"
-					Background="White"
-					BorderThickness="1"
-					BorderBrush="DarkOrange"
-					CornerRadius="8"
-					
-					Margin="0,8,8,0">
-				<Grid
-					  ColumnDefinitions="*,*"
-    				  Margin="8"
-					  RowDefinitions="Auto,*">
-					<Image Source="avares://DontLetMeExpireAvalonia/Assets/avalonia-logo.ico"
-						   Height="40"
-						   HorizontalAlignment="Left"/>
-					<!--  Anzeige der Anzahl der Einträge, rechtsbündig ausgerichtet  -->
-					<TextBlock
-						Grid.Row="0"
-						Grid.Column="1"
-						FontWeight="Bold"
-						FontSize="20"
-						Foreground="DarkOrange"
-						HorizontalAlignment="Right"
-						Text="{Binding ExpiresTodayCount}"/>
-
-					<!--  Anzeige der Beschreibung  -->
-					<TextBlock
-						Grid.Row="1"
-						Grid.Column="0"
-						Grid.ColumnSpan="2"
-						FontSize="20"
-						Text="Läuft heute ab"
-						VerticalAlignment="Bottom" />
-				</Grid>
-			</Border>
-
-			<Border Grid.Row="1"
-				Grid.Column="1"
-				Background="White"
-				BorderThickness="1"
-				BorderBrush="DarkRed"
-				CornerRadius="8"
-					
-				Margin="8,8,0,0">
-				<Grid
-					  ColumnDefinitions="*,*"
-    				  Margin="8"
-					  RowDefinitions="Auto,*">
-					<Image Source="avares://DontLetMeExpireAvalonia/Assets/avalonia-logo.ico"
-						   Height="40"
-						   HorizontalAlignment="Left"/>
-					<!--  Anzeige der Anzahl der Einträge, rechtsbündig ausgerichtet  -->
-					<TextBlock
-						Grid.Row="0"
-						Grid.Column="1"
-						FontWeight="Bold"
-						FontSize="20"
-						Foreground="DarkRed"
-						HorizontalAlignment="Right"
-						Text="{Binding ExpiredCount}"/>
-
-					<!--  Anzeige der Beschreibung  -->
-					<TextBlock
-						Grid.Row="1"
-						Grid.Column="0"
-						Grid.ColumnSpan="2"
-						FontSize="20"
-						Text="Abgelaufen"
-						VerticalAlignment="Bottom" />
-				</Grid>
-			</Border>
-
-
-
-
+			<controls:DashboardTile
+				Margin="8,8,0,0"
+                Grid.Row="1"
+                Grid.Column="1"
+                BorderColor="DarkRed"
+                Count="{Binding ExpiredCount}"
+                CountColor="DarkRed"
+                Icon="avares://DontLetMeExpireAvalonia/Assets/avalonia-logo.ico"
+                Text="Abgelaufen" />
+	
 			<TextBlock Grid.Row="2" Grid.ColumnSpan="2" Margin="0,24,0,0" Text="Meine Lagerorte" FontSize="24"  />
 			<StackPanel Grid.Row="3" Grid.ColumnSpan="2" Spacing="8" Margin="0,8,0,8">
 				<Border Background="White"
