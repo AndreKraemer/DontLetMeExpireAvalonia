@@ -5,6 +5,7 @@ using CommunityToolkit.Mvvm.Input;
 using DontLetMeExpireAvalonia.Models;
 using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 
 
@@ -39,9 +40,17 @@ namespace DontLetMeExpireAvalonia.ViewModels
         {
             if (value is null) return;
 
-            var vm = Design.IsDesignMode
-                ? Activator.CreateInstance(value.ModelType)
-                : Ioc.Default.GetService(value.ModelType);
+            object? vm;
+
+            if(Design.IsDesignMode)
+            {
+                Type designModelType = Type.GetType($"{value.ModelType.Namespace}.DesignTime_{value.ModelType.Name}");
+                vm = designModelType != null ? Activator.CreateInstance(designModelType, true) : Activator.CreateInstance(value.ModelType);
+            }
+            else
+            {               
+                vm = Ioc.Default.GetService(value.ModelType);
+            }
 
             if (vm is not ViewModelBase vmb) return;
 

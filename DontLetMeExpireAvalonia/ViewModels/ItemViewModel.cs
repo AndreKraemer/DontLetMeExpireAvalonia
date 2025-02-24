@@ -12,8 +12,9 @@ namespace DontLetMeExpireAvalonia.ViewModels
 {
     public partial class ItemViewModel: ViewModelBase
     {
-        private readonly DummyStorageLocationService _storageLocationService = new();
-        private readonly DummyItemService _itemService = new();
+        private readonly IStorageLocationService _storageLocationService;
+        private readonly IItemService _itemService;
+
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(SaveCommand))]
@@ -34,6 +35,15 @@ namespace DontLetMeExpireAvalonia.ViewModels
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(SaveCommand))]
         private string _image;
+
+
+        public ItemViewModel(IStorageLocationService storageLocationService,
+                             IItemService itemService)
+        {
+            _storageLocationService = storageLocationService;
+            _itemService = itemService;
+        }
+
 
 
         public ObservableCollection<StorageLocation> StorageLocations { get; set; } = [];
@@ -94,6 +104,14 @@ namespace DontLetMeExpireAvalonia.ViewModels
         {
             return !string.IsNullOrEmpty(Name)
               && Amount > 0;
+        }
+    }
+
+    public class DesignTime_ItemViewModel : ItemViewModel
+    {
+        public DesignTime_ItemViewModel() : base(new DummyStorageLocationService(), new DummyItemService())
+        {
+            InitializeAsync();
         }
     }
 }

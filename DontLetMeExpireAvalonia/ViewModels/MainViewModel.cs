@@ -8,7 +8,12 @@ namespace DontLetMeExpireAvalonia.ViewModels;
 
 public partial class MainViewModel : ViewModelBase
 {
-    private readonly DummyItemService _itemService = new();
+    private readonly IItemService _itemService;
+
+    public MainViewModel(IItemService itemService)
+    {
+        _itemService = itemService;
+    }
 
     [ObservableProperty]
     private int _stockCount;
@@ -36,5 +41,13 @@ public partial class MainViewModel : ViewModelBase
         ExpiringSoonCount = (await _itemService.GetExpiresSoonAsync()).Count();
         ExpiresTodayCount = (await _itemService.GetExpiresTodayAsync()).Count();
         ExpiredCount = (await _itemService.GetExpiredAsync()).Count();
+    }
+}
+
+public class DesignTime_MainViewModel : MainViewModel
+{
+    public DesignTime_MainViewModel(): base(new DummyItemService())
+    {
+        InitializeAsync();
     }
 }

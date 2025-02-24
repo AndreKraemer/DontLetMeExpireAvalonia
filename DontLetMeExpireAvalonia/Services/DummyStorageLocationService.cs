@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DontLetMeExpireAvalonia.Services;
 
-public class DummyStorageLocationService
+public class DummyStorageLocationService : IStorageLocationService
 {
     private readonly DummyItemService _itemService;
     private readonly List<StorageLocation> _storageLocations = [];

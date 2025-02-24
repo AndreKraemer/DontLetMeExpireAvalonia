@@ -1,6 +1,5 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Data.Core;
 using Avalonia.Data.Core.Plugins;
 using System.Linq;
 using Avalonia.Markup.Xaml;
@@ -8,6 +7,7 @@ using DontLetMeExpireAvalonia.ViewModels;
 using DontLetMeExpireAvalonia.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
+using DontLetMeExpireAvalonia.Services;
 
 namespace DontLetMeExpireAvalonia;
 
@@ -23,6 +23,8 @@ public partial class App : Application
         // Configure IoC
         var services = new ServiceCollection();
         services.AddSingleton<ShellViewModel>();
+        services.AddSingleton<IStorageLocationService, DummyStorageLocationService>();
+        services.AddSingleton<IItemService, DummyItemService>();
         services.AddTransient<MainViewModel>();
         services.AddTransient<ItemViewModel>();
         var provider = services.BuildServiceProvider();
