@@ -4,7 +4,6 @@ using Avalonia.Data.Core;
 using Avalonia.Data.Core.Plugins;
 using System.Linq;
 using Avalonia.Markup.Xaml;
-using Avalonia.Media;
 using DontLetMeExpireAvalonia.ViewModels;
 using DontLetMeExpireAvalonia.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;

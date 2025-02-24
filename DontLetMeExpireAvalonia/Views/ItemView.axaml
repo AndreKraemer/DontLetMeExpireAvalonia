@@ -3,6 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:vm="clr-namespace:DontLetMeExpireAvalonia.ViewModels"
+			 x:DataType="vm:ItemViewModel"
              mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="700"
              x:Class="DontLetMeExpireAvalonia.Views.ItemView">
 	<Design.DataContext>
@@ -20,18 +21,16 @@
 			</StackPanel>
 			<StackPanel Grid.Row="1" Spacing="8" Margin="16">
 				<TextBlock Text="Name"/>
-				<TextBox />
+				<TextBox Text="{Binding Name}" />
 				<TextBlock Margin="0,8,0,0" Text="Lagerort"/>
-				<ComboBox HorizontalAlignment="Stretch">
-					<ComboBoxItem>Gefrierschrank</ComboBoxItem>
-					<ComboBoxItem>Kühlschrank</ComboBoxItem>
-					<ComboBoxItem>Vorratsschrank</ComboBoxItem>
+				<ComboBox HorizontalAlignment="Stretch" ItemsSource="{Binding StorageLocations}"
+						  SelectedItem="{Binding SelectedLocation}" DisplayMemberBinding="{Binding Name}">
 				</ComboBox>
 				<TextBlock Margin="0,8,0,0" Text="Verfallsdatum"/>
-				<CalendarDatePicker/>
+				<CalendarDatePicker SelectedDate="{Binding ExpirationDate}"/>
 				<TextBlock Margin="0,8,0,0" Text="Menge" />
-				<TextBox TextInputOptions.ContentType="Number" />
-				<Button Margin="0,8,0,0" Content="Speichern" />
+				<TextBox TextInputOptions.ContentType="Number" Text="{Binding Amount}" />
+				<Button Margin="0,8,0,0" Content="Speichern" Command="{Binding SaveCommand}" />
 			</StackPanel>
 		</Grid>
 

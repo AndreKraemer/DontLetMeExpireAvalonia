@@ -46,7 +46,7 @@
 						FontSize="20"
 						Foreground="DarkGray"
 						HorizontalAlignment="Right"
-						Text="12"/>
+						Text="{Binding StockCount}"/>
 
 					<!--  Anzeige der Beschreibung  -->
 					<TextBlock
@@ -82,7 +82,7 @@
 						FontSize="20"
 						Foreground="DarkGreen"
 						HorizontalAlignment="Right"
-						Text="3"/>
+						Text="{Binding ExpiringSoonCount}"/>
 
 					<!--  Anzeige der Beschreibung  -->
 					<TextBlock
@@ -118,7 +118,7 @@
 						FontSize="20"
 						Foreground="DarkOrange"
 						HorizontalAlignment="Right"
-						Text="1"/>
+						Text="{Binding ExpiresTodayCount}"/>
 
 					<!--  Anzeige der Beschreibung  -->
 					<TextBlock
@@ -154,7 +154,7 @@
 						FontSize="20"
 						Foreground="DarkRed"
 						HorizontalAlignment="Right"
-						Text="4"/>
+						Text="{Binding ExpiredCount}"/>
 
 					<!--  Anzeige der Beschreibung  -->
 					<TextBlock

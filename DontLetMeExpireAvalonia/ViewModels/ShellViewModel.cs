@@ -26,16 +26,16 @@ namespace DontLetMeExpireAvalonia.ViewModels
         public ShellViewModel()
         {
 
-            FlyoutItems =new ObservableCollection<FlyoutItem>
+            FlyoutItems = new ObservableCollection<FlyoutItem>
             {
-                new FlyoutItem(typeof(MainViewModel),"Home", "Home"),
-                new FlyoutItem(typeof(ItemViewModel),"dummy", "Item"),
+                new FlyoutItem(typeof(MainViewModel),"Home", "Home", []),
+                new FlyoutItem(typeof(ItemViewModel),"dummy", "Item", []),
             };
 
             ActiveFlyoutItem = FlyoutItems.First();            
         }
 
-        partial void OnActiveFlyoutItemChanged(FlyoutItem value)
+        async partial void OnActiveFlyoutItemChanged(FlyoutItem value)
         {
             if (value is null) return;
 
@@ -45,7 +45,9 @@ namespace DontLetMeExpireAvalonia.ViewModels
 
             if (vm is not ViewModelBase vmb) return;
 
+            await vmb.OnNavigatedToAsync(value.NavigationParameters);
             Content = vmb;
+            FlyoutIsPresented = false;
         }
 
         [RelayCommand]
