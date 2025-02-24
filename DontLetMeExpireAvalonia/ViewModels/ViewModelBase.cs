@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace DontLetMeExpireAvalonia.ViewModels;
 
-public abstract partial class ViewModelBase : ObservableObject
+public abstract partial class ViewModelBase : ObservableValidator
 {
     [ObservableProperty]
     private string _title;

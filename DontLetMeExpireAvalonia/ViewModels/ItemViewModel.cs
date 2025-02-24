@@ -5,6 +5,7 @@ using DontLetMeExpireAvalonia.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -18,6 +19,9 @@ namespace DontLetMeExpireAvalonia.ViewModels
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(SaveCommand))]
+        [NotifyDataErrorInfo]
+        [Required]
+        [Length(5, 50)]
         private string _name;
 
         [ObservableProperty]
@@ -30,7 +34,9 @@ namespace DontLetMeExpireAvalonia.ViewModels
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(SaveCommand))]
-        private decimal _amount;
+        [NotifyDataErrorInfo]
+        [Range(1, 10000)]
+        private decimal _amount = 0;
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(SaveCommand))]

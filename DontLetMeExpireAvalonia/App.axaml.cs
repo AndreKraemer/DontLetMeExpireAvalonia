@@ -20,6 +20,7 @@ public partial class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
+       
         // Configure IoC
         var services = new ServiceCollection();
         services.AddSingleton<ShellViewModel>();

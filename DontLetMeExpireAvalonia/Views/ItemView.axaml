@@ -29,7 +29,7 @@
 				<TextBlock Margin="0,8,0,0" Text="Verfallsdatum"/>
 				<CalendarDatePicker SelectedDate="{Binding ExpirationDate}"/>
 				<TextBlock Margin="0,8,0,0" Text="Menge" />
-				<TextBox TextInputOptions.ContentType="Number" Text="{Binding Amount}" />
+				<NumericUpDown Text="{Binding Amount}" />
 				<Button Margin="0,8,0,0" Content="Speichern" Command="{Binding SaveCommand}" />
 			</StackPanel>
 		</Grid>
