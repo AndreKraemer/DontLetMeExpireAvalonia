@@ -3,10 +3,12 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
 using DontLetMeExpireAvalonia.Models;
+using DontLetMeExpireAvalonia.Services;
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 
 
 namespace DontLetMeExpireAvalonia.ViewModels
@@ -22,10 +24,24 @@ namespace DontLetMeExpireAvalonia.ViewModels
         [ObservableProperty]
         private FlyoutItem _activeFlyoutItem;
 
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(NavigateBackCommand))]
+        private bool _canNavigateBack;
+
         public ObservableCollection<FlyoutItem> FlyoutItems { get; }
 
-        public ShellViewModel()
+        private readonly INavigationService _navigationService;
+
+        public ShellViewModel(): this(new NavigationService())
         {
+            
+        }
+
+        public ShellViewModel(INavigationService navigationService)
+        {
+            _navigationService = navigationService;
+            _navigationService.Navigated += OnNavigated;
+
 
             FlyoutItems = new ObservableCollection<FlyoutItem>
             {
@@ -36,31 +52,27 @@ namespace DontLetMeExpireAvalonia.ViewModels
             ActiveFlyoutItem = FlyoutItems.First();            
         }
 
+        private void OnNavigated(ViewModelBase viewModel)
+        {
+            Content = viewModel;
+            FlyoutIsPresented = false;
+            CanNavigateBack = _navigationService.CanNavigateBack;
+        }
+
         async partial void OnActiveFlyoutItemChanged(FlyoutItem value)
         {
             if (value is null) return;
-
-            object? vm;
-
-            if(Design.IsDesignMode)
-            {
-                Type designModelType = Type.GetType($"{value.ModelType.Namespace}.DesignTime_{value.ModelType.Name}");
-                vm = designModelType != null ? Activator.CreateInstance(designModelType, true) : Activator.CreateInstance(value.ModelType);
-            }
-            else
-            {               
-                vm = Ioc.Default.GetService(value.ModelType);
-            }
-
-            if (vm is not ViewModelBase vmb) return;
-
-            await vmb.OnNavigatedToAsync(value.NavigationParameters);
-            Content = vmb;
-            FlyoutIsPresented = false;
+            await _navigationService.NavigateTo(value.ModelType, value.NavigationParameters, true);
         }
 
         [RelayCommand]
         private void ToggleFlyout() => FlyoutIsPresented = !FlyoutIsPresented;
+
+        [RelayCommand(CanExecute = nameof(CanNavigateBack))]
+        private void NavigateBack()
+        {
+             _navigationService.NavigateBack();
+        }
 
 
     }

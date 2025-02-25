@@ -23,6 +23,7 @@ public partial class App : Application
        
         // Configure IoC
         var services = new ServiceCollection();
+        services.AddSingleton<INavigationService, NavigationService>();
         services.AddSingleton<ShellViewModel>();
         services.AddSingleton<IStorageLocationService, DummyStorageLocationService>();
         services.AddSingleton<IItemService, DummyItemService>();

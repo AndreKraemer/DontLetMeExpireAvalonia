@@ -12,17 +12,26 @@
 	<Design.DataContext>
 		<vm:ShellViewModel/>
 	</Design.DataContext>
+	<DockPanel>
+		<Grid ColumnDefinitions="80,*" DockPanel.Dock="Top" Background="#f5f7fa">
+			<StackPanel Orientation="Horizontal" Spacing="4">
+			<Button Command="{Binding NavigateBackCommand}" Background="Transparent"
+					IsVisible="{Binding CanNavigateBack}">
+				<PathIcon Height="11" Data="{StaticResource Back}"/>
+			</Button>
+			<Button Command="{Binding ToggleFlyoutCommand}" Grid.Column="0" Background="Transparent">
+				<PathIcon Height="11" Data="{StaticResource Menu}"/>
+			</Button>
+			</StackPanel>
+			<TextBlock Text="{Binding Content.Title}" Grid.Column="1"/>
+		</Grid>
 	<SplitView IsPaneOpen="{Binding FlyoutIsPresented}"
 			   CompactPaneLength="40"
 			   OpenPaneLength="300"
-			   DisplayMode="CompactOverlay"
-			   PaneBackground="#f5f7fa"
-			   >
+			   DisplayMode="Overlay"
+			   PaneBackground="#f5f7fa">
 		<SplitView.Pane>
 			<StackPanel>
-				<Button Command="{Binding ToggleFlyoutCommand}">
-					<PathIcon Height="11" Data="{StaticResource Menu}"/>
-				</Button>
 				<ListBox ItemsSource="{Binding FlyoutItems}" SelectedItem="{Binding ActiveFlyoutItem}">
 					<ListBox.ItemTemplate>
 						<DataTemplate DataType="{x:Type models:FlyoutItem}">
@@ -37,10 +46,8 @@
 			</StackPanel>
 		</SplitView.Pane>
 		<SplitView.Content>
-			<DockPanel>
-				<TextBlock Text="{Binding Content.Title}"/>
-				<TransitioningContentControl Content="{Binding Content}"/>
-			</DockPanel>
+			<TransitioningContentControl Content="{Binding Content}" />
 		</SplitView.Content>
 	</SplitView>
+	</DockPanel>
 </UserControl>

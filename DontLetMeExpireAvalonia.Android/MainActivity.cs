@@ -2,6 +2,8 @@
 using Android.Content.PM;
 using Avalonia;
 using Avalonia.Android;
+using CommunityToolkit.Mvvm.DependencyInjection;
+using DontLetMeExpireAvalonia.ViewModels;
 
 namespace DontLetMeExpireAvalonia.Android;
 
@@ -17,5 +19,19 @@ public class MainActivity : AvaloniaMainActivity<App>
     {
         return base.CustomizeAppBuilder(builder)
             .WithInterFont();
+    }
+
+    public override void OnBackPressed()
+    {
+        var shell = Ioc.Default.GetRequiredService<ShellViewModel>();
+        if (shell.NavigateBackCommand.CanExecute(null))
+        {
+            shell.NavigateBackCommand.Execute(null);
+        }
+        else
+        {
+            // This will terminate the app.
+            base.OnBackPressed();
+        }
     }
 }

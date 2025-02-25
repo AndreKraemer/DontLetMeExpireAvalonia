@@ -182,6 +182,7 @@
 			</StackPanel>
 			<Button Grid.Row="4" Grid.Column="0"
 					Content="Eintrag hinzufügen"
+					Command="{Binding NavigateToAddItemCommand}"
                     Background="#3d6dcc"
 					Foreground="White"
 					HorizontalAlignment="Stretch"
