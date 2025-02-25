@@ -15,6 +15,8 @@ namespace DontLetMeExpireAvalonia.ViewModels
     {
         private readonly IStorageLocationService _storageLocationService;
         private readonly IItemService _itemService;
+        private readonly INavigationService _navigationService;
+
 
 
         [ObservableProperty]
@@ -42,10 +44,14 @@ namespace DontLetMeExpireAvalonia.ViewModels
         [NotifyCanExecuteChangedFor(nameof(SaveCommand))]
         private string _image;
 
+        [ObservableProperty]
+        private string _id;
 
-        public ItemViewModel(IStorageLocationService storageLocationService,
+        public ItemViewModel(INavigationService navigationService,
+                             IStorageLocationService storageLocationService,
                              IItemService itemService)
         {
+            _navigationService = navigationService;
             _storageLocationService = storageLocationService;
             _itemService = itemService;
         }
@@ -57,17 +63,17 @@ namespace DontLetMeExpireAvalonia.ViewModels
 
         override public async Task OnNavigatedToAsync(Dictionary<string, object> parameters)
         {
-          await InitializeAsync();
+            var itemId = parameters?.GetValueOrDefault("ItemId", null) as string;
+            await InitializeAsync(itemId);
         }
 
         /// <summary>
         /// Initialisiert das ViewModel asynchron.
         /// </summary>
-        public async Task InitializeAsync()
+        public async Task InitializeAsync(string? itemId = null)
         {
             // Speicherorte laden
             var locations = await _storageLocationService.GetAsync();
-
 
             // Die Liste der Speicherorte aktualisieren
             StorageLocations.Clear();
@@ -75,7 +81,31 @@ namespace DontLetMeExpireAvalonia.ViewModels
             {
                 StorageLocations.Add(location);
             }
-            SelectedLocation = StorageLocations.FirstOrDefault();
+            if (!string.IsNullOrEmpty(itemId))
+            {
+                var item = await _itemService.GetByIdAsync(itemId);
+                if (item != null)
+                {
+                    Id = item.Id;
+                    Name = item.Name;
+                    ExpirationDate = item.ExpirationDate;
+                    SelectedLocation = StorageLocations.FirstOrDefault(x => x.Id == item.StorageLocationId);
+                    Image = item.Image;
+                    Amount = item.Amount;
+                    Title = item.Name;
+                }
+
+            }
+            else
+            {
+                Id = string.Empty;
+                Name = string.Empty;
+                ExpirationDate = DateTime.Today;
+                SelectedLocation = StorageLocations.First();
+                Image = string.Empty;
+                Amount = 1;
+                Title = "Neuer Eintrag";
+            }
         }
 
 
@@ -85,10 +115,13 @@ namespace DontLetMeExpireAvalonia.ViewModels
         [RelayCommand(CanExecute = nameof(CanSave))]
         private async Task SaveAsync()
         {
+            
+
             // Neues Element mit den
             // Daten des ViewModels erstellen
             var item = new Item
             {
+                Id = Id,
                 Name = Name,
                 ExpirationDate = ExpirationDate,
                 StorageLocationId = SelectedLocation.Id,
@@ -104,6 +137,8 @@ namespace DontLetMeExpireAvalonia.ViewModels
             ExpirationDate = DateTime.Today;
             Amount = 0;
             SelectedLocation = StorageLocations.First();
+
+            _navigationService.NavigateBack();
         }
 
         private bool CanSave()
@@ -111,11 +146,13 @@ namespace DontLetMeExpireAvalonia.ViewModels
             return !string.IsNullOrEmpty(Name)
               && Amount > 0;
         }
+
+        
     }
 
     public class DesignTime_ItemViewModel : ItemViewModel
     {
-        public DesignTime_ItemViewModel() : base(new DummyStorageLocationService(), new DummyItemService())
+        public DesignTime_ItemViewModel() : base(new NavigationService(), new DummyStorageLocationService(new DummyItemService()), new DummyItemService())
         {
             InitializeAsync();
         }

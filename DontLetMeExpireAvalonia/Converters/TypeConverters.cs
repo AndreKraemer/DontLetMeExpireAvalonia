@@ -18,5 +18,30 @@ namespace DontLetMeExpireAvalonia.Converters
                 Application.Current!.TryFindResource(iconKey, out var resource);
                 return resource as StreamGeometry ?? StreamGeometry.Parse(StreamGeometryNotFound);
             });
+
+        public static FuncValueConverter<DateTime, string> DateToRelativeStringConverter { get; } =
+            new(date =>
+            {
+                // Differenz zwischen dem aktuellen und
+                // dem �bergebenen Datum berechnen
+                var today = DateTime.Today;
+                var difference = (date - today).Days;
+
+                // Unterschied in natürliche Sprache umwandeln
+                // und zurückgeben
+                return difference switch
+                {
+                    0 => "Heute",
+                    1 => "Morgen",
+                    -1 => "Gestern",
+                    < -7 => string.Format("Vor {0} Tagen", Math.Abs(difference)),
+                    < 0 => "Letzte Woche",
+                    < 7 => string.Format("In {0} Tagen", difference),
+                    < 14 => "Nächste Woche",
+                    < 21 => "In zwei Wochen",
+                    < 28 => "In drei Wochen",
+                    _ => "In über einem Monat"
+                };
+            });
     }
 }

@@ -2,7 +2,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:behaviors="clr-namespace:DontLetMeExpireAvalonia.Behaviors"
              xmlns:vm="clr-namespace:DontLetMeExpireAvalonia.ViewModels"
+			 xmlns:models="clr-namespace:DontLetMeExpireAvalonia.Models"
 			 xmlns:controls="clr-namespace:DontLetMeExpireAvalonia.Controls"
              mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="800"
              x:Class="DontLetMeExpireAvalonia.Views.MainView"
@@ -31,7 +33,8 @@
 				Count="{Binding StockCount}"
 				BorderColor="LightGray"
 				Icon="avares://DontLetMeExpireAvalonia/Assets/avalonia-logo.ico"
-				Text="Mein Vorrat" />
+				Text="Mein Vorrat" 
+				behaviors:TappedBehavior.Command="{Binding NavigateToStockCommand}"/>
 
 			<controls:DashboardTile
 				Margin="8,0,0,8"
@@ -41,7 +44,8 @@
 				Count="{Binding ExpiringSoonCount}"
 				CountColor="DarkGreen"
 				Icon="avares://DontLetMeExpireAvalonia/Assets/avalonia-logo.ico"
-				Text="Läuft bald ab" />
+				Text="Läuft bald ab" 
+				behaviors:TappedBehavior.Command="{Binding NavigateToExpiringSoonCommand}"/>
 
 			<controls:DashboardTile
 				Margin="0,8,8,0"
@@ -51,7 +55,8 @@
 				Count="{Binding ExpiresTodayCount}"
 				CountColor="DarkOrange"
 				Icon="avares://DontLetMeExpireAvalonia/Assets/avalonia-logo.ico"
-				Text="Läuft heute ab" />
+				Text="Läuft heute ab" 
+				behaviors:TappedBehavior.Command="{Binding NavigateToExpiresTodayCommand}"/>
 
 			<controls:DashboardTile
 				Margin="8,8,0,0"
@@ -61,125 +66,96 @@
                 Count="{Binding ExpiredCount}"
                 CountColor="DarkRed"
                 Icon="avares://DontLetMeExpireAvalonia/Assets/avalonia-logo.ico"
-                Text="Abgelaufen" />
-	
+                Text="Abgelaufen" 
+				behaviors:TappedBehavior.Command="{Binding NavigateToExpiredCommand}"/>
+
 			<TextBlock Grid.Row="2" Grid.ColumnSpan="2" Margin="0,24,0,0" Text="Meine Lagerorte" FontSize="24"  />
-			<StackPanel Grid.Row="3" Grid.ColumnSpan="2" Spacing="8" Margin="0,8,0,8">
-				<Border Background="White"
-						CornerRadius="16"
-						BorderThickness="0"
-						Margin="1,0,1,9"
-						 BoxShadow="0 4 8 0 DarkGray"
-						>
-					<Grid Margin="8"
-						  ColumnDefinitions="48,*,24"
-						  RowDefinitions="24,24">
-						<Ellipse Fill="AliceBlue"
-								 Grid.RowSpan="2"/>
-						<Image Source="avares://DontLetMeExpireAvalonia/Assets/avalonia-logo.ico"
-						   Height="40"
-						   HorizontalAlignment="Center"
-						   VerticalAlignment="Center"
-						   Grid.RowSpan="2"/>
-						<TextBlock
-							Margin="8,0"
-							Grid.Column="1"
-							FontWeight="Bold"
-							Text="Gefrierschrank" />
-						<TextBlock
-							Margin="8,0"
-							Grid.Column="1"
-							Grid.Row="1"
-							Foreground="DarkGray"
-							Text="3 Einträge" />
 
-						<TextBlock
-                            Grid.RowSpan="2"
-                            Grid.Column="2"
-                            Margin="0,0,8,0"
-                            FontSize="36"
-                            HorizontalAlignment="Right"
-                            Text="›"
-                            VerticalAlignment="Center" />
-					</Grid>
-				</Border>
-				<Border Background="White"
-						CornerRadius="16"
-						BorderThickness="0"
-						Margin="1,0,1,9"
-						 BoxShadow="0 4 8 0 DarkGray"
-						>
-					<Grid Margin="8"
-						  ColumnDefinitions="48,*,24"
-						  RowDefinitions="24,24">
-						<Ellipse Fill="AliceBlue"
-								 Grid.RowSpan="2"/>
-						<Image Source="avares://DontLetMeExpireAvalonia/Assets/avalonia-logo.ico"
-						   Height="40"
-						   HorizontalAlignment="Center"
-						   VerticalAlignment="Center"
-						   Grid.RowSpan="2"/>
-						<TextBlock
-							Margin="8,0"
-							Grid.Column="1"
-							FontWeight="Bold"
-							Text="Kühlschrank" />
-						<TextBlock
-							Margin="8,0"
-							Grid.Column="1"
-							Grid.Row="1"
-							Foreground="DarkGray"
-							Text="5 Einträge" />
+			<!-- Items Control nur Anzeigen, wenn Elemente vorhanden sind -->
+			<ItemsControl Grid.Row="3" Grid.ColumnSpan="2" Margin="0,8,0,8" ItemsSource="{Binding StorageLocations}"
+						  IsVisible="{Binding !!StorageLocations.Count}">
+				<ItemsControl.ItemTemplate>
+					<DataTemplate x:DataType="models:StorageLocationWithItemCount">
+						<Border Background="White"
+								CornerRadius="16"
+								BorderThickness="0"
+								Margin="1,0,1,9"
+								BoxShadow="0 4 8 0 DarkGray"
+								behaviors:TappedBehavior.Command="{Binding $parent[ItemsControl].((vm:MainViewModel)DataContext).NavigateToLocationCommand}"
+								behaviors:TappedBehavior.CommandParameter="{Binding Id}">
+							<Grid Margin="8"
+								  ColumnDefinitions="48,*,24"
+								  RowDefinitions="24,24">
+								<Ellipse Fill="AliceBlue"
+										 Grid.RowSpan="2"/>
+								<Image Source="avares://DontLetMeExpireAvalonia/Assets/avalonia-logo.ico"
+								   Height="40"
+								   HorizontalAlignment="Center"
+								   VerticalAlignment="Center"
+								   Grid.RowSpan="2"/>
+								<TextBlock
+									Margin="8,0"
+									Grid.Column="1"
+									FontWeight="Bold"
+									Text="{Binding Name}" />
+								<TextBlock
+									Margin="8,0"
+									Grid.Column="1"
+									Grid.Row="1"
+									Foreground="DarkGray"
+									Text="{Binding ItemCount, StringFormat='{}{0} Einträge'}" />
 
-						<TextBlock
-                            Grid.RowSpan="2"
-                            Grid.Column="2"
-                            Margin="0,0,8,0"
-                            FontSize="36"
-                            HorizontalAlignment="Right"
-                            Text="›"
-                            VerticalAlignment="Center" />
-					</Grid>
-				</Border>
-				<Border Background="White"
-						CornerRadius="16"
-						BorderThickness="0"
-						Margin="1,0,1,9"
-						 BoxShadow="0 4 8 0 DarkGray"
-						>
-					<Grid Margin="8"
-						  ColumnDefinitions="48,*,24"
-						  RowDefinitions="24,24">
-						<Ellipse Fill="AliceBlue"
-								 Grid.RowSpan="2"/>
-						<Image Source="avares://DontLetMeExpireAvalonia/Assets/avalonia-logo.ico"
-						   Height="40"
-						   HorizontalAlignment="Center"
-						   VerticalAlignment="Center"
-						   Grid.RowSpan="2"/>
-						<TextBlock
-							Margin="8,0"
-							Grid.Column="1"
-							FontWeight="Bold"
-							Text="Vorratsschrank" />
-						<TextBlock
-							Margin="8,0"
-							Grid.Column="1"
-							Grid.Row="1"
-							Foreground="DarkGray"
-							Text="4 Einträge" />
+								<TextBlock
+									Grid.RowSpan="2"
+									Grid.Column="2"
+									Margin="0,0,8,0"
+									FontSize="36"
+									HorizontalAlignment="Right"
+									Text="›"
+									VerticalAlignment="Center" />
+							</Grid>
+						</Border>
+					</DataTemplate>
+				</ItemsControl.ItemTemplate>
+			</ItemsControl>
 
-						<TextBlock
-                            Grid.RowSpan="2"
-                            Grid.Column="2"
-                            Margin="0,0,8,0"
-                            FontSize="36"
-                            HorizontalAlignment="Right"
-                            Text="›"
-                            VerticalAlignment="Center" />
-					</Grid>
-				</Border>
+			<!-- Alternative Darstellung, falls es keine Lagerorte gibt -->
+			<StackPanel Spacing="8" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="3" Grid.ColumnSpan="2"
+						IsVisible="{Binding !StorageLocations.Count}">
+				<Image Source="avares://DontLetMeExpireAvalonia/Assets/avalonia-logo.ico" Width="150"/>
+				<TextBlock Margin="0,8,0,0" FontSize="18" FontWeight="Bold"
+						   Text="Oh, hier sieht es noch ganz leer aus!" />
+				<TextBlock Text="Du hast noch keine Orte, wie z.B. einen Kühlschrank oder einen Vorratsschrank, in der App gespeichert, wo du deine Lebensmittel aufbewahren kannst." />
+
+				<TextBlock Margin="0,8,0,0" FontWeight="Bold" Text="Los geht's!" />
+
+				<TextBlock Text="Mit vorgeschlagenen Orten starten"
+						   Foreground="#3d6dcc"
+						   TextDecorations="Underline"
+						   behaviors:TappedBehavior.Command="{Binding CreateSuggestedLocationsCommand}">
+				</TextBlock>
+
+				<TextBlock FontSize="11" Text="Wir legen ein paar Orte wie 'Kühlschrank' und 'Vorratsschrank' für dich an, damit du direkt loslegen kannst! Du kannst die Orte später natürlich auch umbenennen oder löschen." />
+
+				<TextBlock Margin="0,8,0,0"
+						   Text="Mit vorgeschlagenen Orten und Lebensmitteln starten"
+						   Foreground="#3d6dcc"
+						   TextDecorations="Underline"
+						   behaviors:TappedBehavior.Command="{Binding CreateSuggestedLocationsAndStockCommand}">
+
+				</TextBlock>
+
+				<TextBlock FontSize="11" Text="Hier fügen wir nicht nur Orte wie 'Kühlschrank' hinzu, sondern auch einige Lebensmittel, damit du siehst, wie alles funktioniert! Du kannst die Orte und Lebensmittel später natürlich auch umbenennen oder löschen" />
+
+				<TextBlock Margin="0,8,0,0"
+						   Text="Selbst einen neuen Ort anlegen"
+						   Foreground="#3d6dcc"
+						   TextDecorations="Underline"/>
+
+				<TextBlock FontSize="11" Text="Erstelle deinen eigenen Ort, wie z.B. deinen Kühlschrank, um zu beginnen." />
 			</StackPanel>
+
+
 			<Button Grid.Row="4" Grid.Column="0"
 					Content="Eintrag hinzufügen"
 					Command="{Binding NavigateToAddItemCommand}"

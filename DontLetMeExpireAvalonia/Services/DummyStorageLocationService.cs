@@ -8,19 +8,41 @@ namespace DontLetMeExpireAvalonia.Services;
 
 public class DummyStorageLocationService : IStorageLocationService
 {
-    private readonly DummyItemService _itemService;
+    private readonly IItemService _itemService;
     private readonly List<StorageLocation> _storageLocations = [];
 
-    public DummyStorageLocationService()
+    public DummyStorageLocationService(IItemService itemService)
     {
+
         _storageLocations = [.. DummyData.Locations];
-        _itemService = new DummyItemService();
+        //_storageLocations = [];
+        _itemService = itemService;
     }
 
     public Task<IEnumerable<StorageLocation>> GetAsync()
     {
         var locations = _storageLocations.OrderBy(x => x.Name).ToList();
         return Task.FromResult(locations.AsEnumerable());
+    }
+
+    public async Task<IEnumerable<StorageLocationWithItemCount>> GetWithItemCountAsync()
+    {
+        var locations = _storageLocations.OrderBy(x => x.Name).ToList();
+        var locationWithItemCount = new List<StorageLocationWithItemCount>();
+
+        foreach (var location in locations)
+        {
+            var items = await _itemService.GetByLocationAsync(location.Id);
+            locationWithItemCount.Add(new StorageLocationWithItemCount
+            {
+                Id = location.Id,
+                Name = location.Name,
+                Icon = location.Icon,
+                ItemCount = items.Count()
+            });
+        }
+
+        return locationWithItemCount;
     }
 
     public Task<StorageLocation?> GetByIdAsync(string id)
@@ -31,7 +53,7 @@ public class DummyStorageLocationService : IStorageLocationService
 
     public Task SaveAsync(StorageLocation storageLocation)
     {
-        var hasEmptyId = string.IsNullOrEmpty(storageLocation.Id) 
+        var hasEmptyId = string.IsNullOrEmpty(storageLocation.Id)
                          || storageLocation.Id == Guid.Empty.ToString();
         var isExistingRecord = _storageLocations.Any(x => x.Id == storageLocation.Id);
 

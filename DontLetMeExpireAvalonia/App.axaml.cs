@@ -29,6 +29,7 @@ public partial class App : Application
         services.AddSingleton<IItemService, DummyItemService>();
         services.AddTransient<MainViewModel>();
         services.AddTransient<ItemViewModel>();
+        services.AddTransient<ItemsViewModel>();
         var provider = services.BuildServiceProvider();
         Ioc.Default.ConfigureServices(provider);
 
