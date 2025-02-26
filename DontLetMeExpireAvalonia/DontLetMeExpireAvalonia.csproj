@@ -32,4 +32,17 @@
       <SubType>Designer</SubType>
     </AvaloniaResource>
   </ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Update="Resources\strings\AppResources.resx">
+			<Generator>PublicResXFileCodeGenerator</Generator>
+			<LastGenOutput>AppResources.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Update="Resources\strings\AppResources.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>AppResources.resx</DependentUpon>
+		</Compile>
+	</ItemGroup>
 </Project>

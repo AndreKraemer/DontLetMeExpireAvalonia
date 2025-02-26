@@ -8,6 +8,8 @@ using DontLetMeExpireAvalonia.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 using DontLetMeExpireAvalonia.Services;
+using System.Globalization;
+using System.Threading;
 
 namespace DontLetMeExpireAvalonia;
 
@@ -20,7 +22,10 @@ public partial class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
-       
+        // DontLetMeExpireAvalonia.Resources.Strings.AppResources.Culture = new CultureInfo("en-US");
+        //Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+        // Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US");
+
         // Configure IoC
         var services = new ServiceCollection();
         services.AddSingleton<INavigationService, NavigationService>();

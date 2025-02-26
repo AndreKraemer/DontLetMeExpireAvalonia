@@ -2,6 +2,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:strings="clr-namespace:DontLetMeExpireAvalonia.Resources.Strings"
 			 xmlns:vm="clr-namespace:DontLetMeExpireAvalonia.ViewModels"
 			 x:DataType="vm:ItemViewModel"
              mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="700"
@@ -14,23 +15,23 @@
 	<ScrollViewer>
 		<Grid RowDefinitions="300,auto">
 			<Rectangle Grid.Row="0" Fill="AliceBlue" Height="300" />
-			<Button Grid.Row="0" Margin="16" HorizontalAlignment="Right" Content="Bild löschen" VerticalAlignment="Top"/>
+			<Button Grid.Row="0" Margin="16" HorizontalAlignment="Right" Content="{x:Static strings:AppResources.DeleteImage}" VerticalAlignment="Top"/>
 			<StackPanel Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center">
 				<Image Source="/Assets/avalonia-logo.ico" Height="48" Width="48"/>
-				<TextBlock Text="Tippe hier, um ein Bild hinzuzufügen"/>
+				<TextBlock Text="{x:Static strings:AppResources.TapToAddImage}"/>
 			</StackPanel>
 			<StackPanel Grid.Row="1" Spacing="8" Margin="16">
-				<TextBlock Text="Name"/>
+				<TextBlock Text="{x:Static strings:AppResources.Name}"/>
 				<TextBox Text="{Binding Name}" />
-				<TextBlock Margin="0,8,0,0" Text="Lagerort"/>
+				<TextBlock Margin="0,8,0,0" Text="{x:Static strings:AppResources.StorageLocation}"/>
 				<ComboBox HorizontalAlignment="Stretch" ItemsSource="{Binding StorageLocations}"
 						  SelectedItem="{Binding SelectedLocation}" DisplayMemberBinding="{Binding Name}">
 				</ComboBox>
-				<TextBlock Margin="0,8,0,0" Text="Verfallsdatum"/>
+				<TextBlock Margin="0,8,0,0" Text="{x:Static strings:AppResources.ExpirationDate}"/>
 				<CalendarDatePicker SelectedDate="{Binding ExpirationDate}"/>
-				<TextBlock Margin="0,8,0,0" Text="Menge" />
+				<TextBlock Margin="0,8,0,0" Text="{x:Static strings:AppResources.Amount}" />
 				<NumericUpDown  Value="{Binding Amount}" />
-				<Button Margin="0,8,0,0" Content="Speichern" Command="{Binding SaveCommand}" />
+				<Button Margin="0,8,0,0" Content="{x:Static strings:AppResources.Save}" Command="{Binding SaveCommand}" />
 			</StackPanel>
 		</Grid>
 

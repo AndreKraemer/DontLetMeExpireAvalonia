@@ -6,6 +6,7 @@
              xmlns:vm="clr-namespace:DontLetMeExpireAvalonia.ViewModels"
 			 xmlns:models="clr-namespace:DontLetMeExpireAvalonia.Models"
 			 xmlns:controls="clr-namespace:DontLetMeExpireAvalonia.Controls"
+			 xmlns:strings="clr-namespace:DontLetMeExpireAvalonia.Resources.Strings"
              mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="800"
              x:Class="DontLetMeExpireAvalonia.Views.MainView"
              x:DataType="vm:MainViewModel"
@@ -33,7 +34,7 @@
 				Count="{Binding StockCount}"
 				BorderColor="LightGray"
 				Icon="avares://DontLetMeExpireAvalonia/Assets/avalonia-logo.ico"
-				Text="Mein Vorrat" 
+				Text="{x:Static strings:AppResources.MyStock}" 
 				behaviors:TappedBehavior.Command="{Binding NavigateToStockCommand}"/>
 
 			<controls:DashboardTile
@@ -44,7 +45,7 @@
 				Count="{Binding ExpiringSoonCount}"
 				CountColor="DarkGreen"
 				Icon="avares://DontLetMeExpireAvalonia/Assets/avalonia-logo.ico"
-				Text="Läuft bald ab" 
+				Text="{x:Static strings:AppResources.ExpiringSoon}" 
 				behaviors:TappedBehavior.Command="{Binding NavigateToExpiringSoonCommand}"/>
 
 			<controls:DashboardTile
@@ -55,7 +56,7 @@
 				Count="{Binding ExpiresTodayCount}"
 				CountColor="DarkOrange"
 				Icon="avares://DontLetMeExpireAvalonia/Assets/avalonia-logo.ico"
-				Text="Läuft heute ab" 
+				Text="{x:Static strings:AppResources.ExpiresToday}" 
 				behaviors:TappedBehavior.Command="{Binding NavigateToExpiresTodayCommand}"/>
 
 			<controls:DashboardTile
@@ -66,10 +67,10 @@
                 Count="{Binding ExpiredCount}"
                 CountColor="DarkRed"
                 Icon="avares://DontLetMeExpireAvalonia/Assets/avalonia-logo.ico"
-                Text="Abgelaufen" 
+                Text="{x:Static strings:AppResources.Expired}" 
 				behaviors:TappedBehavior.Command="{Binding NavigateToExpiredCommand}"/>
 
-			<TextBlock Grid.Row="2" Grid.ColumnSpan="2" Margin="0,24,0,0" Text="Meine Lagerorte" FontSize="24"  />
+			<TextBlock Grid.Row="2" Grid.ColumnSpan="2" Margin="0,24,0,0" Text="{x:Static strings:AppResources.MyStorageLocations}" FontSize="24"  />
 
 			<!-- Items Control nur Anzeigen, wenn Elemente vorhanden sind -->
 			<ItemsControl Grid.Row="3" Grid.ColumnSpan="2" Margin="0,8,0,8" ItemsSource="{Binding StorageLocations}"
@@ -103,7 +104,7 @@
 									Grid.Column="1"
 									Grid.Row="1"
 									Foreground="DarkGray"
-									Text="{Binding ItemCount, StringFormat='{}{0} Einträge'}" />
+									Text="{Binding ItemCount, StringFormat={x:Static strings:AppResources.XItems}}" />
 
 								<TextBlock
 									Grid.RowSpan="2"
@@ -124,40 +125,40 @@
 						IsVisible="{Binding !StorageLocations.Count}">
 				<Image Source="avares://DontLetMeExpireAvalonia/Assets/avalonia-logo.ico" Width="150"/>
 				<TextBlock Margin="0,8,0,0" FontSize="18" FontWeight="Bold"
-						   Text="Oh, hier sieht es noch ganz leer aus!" />
-				<TextBlock Text="Du hast noch keine Orte, wie z.B. einen Kühlschrank oder einen Vorratsschrank, in der App gespeichert, wo du deine Lebensmittel aufbewahren kannst." />
+						   Text="{x:Static strings:AppResources.NoDataTitle}" />
+				<TextBlock Text="{x:Static strings:AppResources.NoDataDescription}" />
 
-				<TextBlock Margin="0,8,0,0" FontWeight="Bold" Text="Los geht's!" />
+				<TextBlock Margin="0,8,0,0" FontWeight="Bold" Text="{x:Static strings:AppResources.GetStarted}" />
 
-				<TextBlock Text="Mit vorgeschlagenen Orten starten"
+				<TextBlock Text="{x:Static strings:AppResources.StartWithSuggestedLocations}"
 						   Foreground="#3d6dcc"
 						   TextDecorations="Underline"
 						   behaviors:TappedBehavior.Command="{Binding CreateSuggestedLocationsCommand}">
 				</TextBlock>
 
-				<TextBlock FontSize="11" Text="Wir legen ein paar Orte wie 'Kühlschrank' und 'Vorratsschrank' für dich an, damit du direkt loslegen kannst! Du kannst die Orte später natürlich auch umbenennen oder löschen." />
+				<TextBlock FontSize="11" Text="{x:Static strings:AppResources.SuggestedLocationsDescription}" />
 
 				<TextBlock Margin="0,8,0,0"
-						   Text="Mit vorgeschlagenen Orten und Lebensmitteln starten"
+						   Text="{x:Static strings:AppResources.StartWithSuggestedLocationsAndStock}"
 						   Foreground="#3d6dcc"
 						   TextDecorations="Underline"
 						   behaviors:TappedBehavior.Command="{Binding CreateSuggestedLocationsAndStockCommand}">
 
 				</TextBlock>
 
-				<TextBlock FontSize="11" Text="Hier fügen wir nicht nur Orte wie 'Kühlschrank' hinzu, sondern auch einige Lebensmittel, damit du siehst, wie alles funktioniert! Du kannst die Orte und Lebensmittel später natürlich auch umbenennen oder löschen" />
+				<TextBlock FontSize="11" Text="{x:Static strings:AppResources.SuggestedLocationsAndStockDescription}" />
 
 				<TextBlock Margin="0,8,0,0"
-						   Text="Selbst einen neuen Ort anlegen"
+						   Text="{x:Static strings:AppResources.CreateNewLocationLinkText}"
 						   Foreground="#3d6dcc"
 						   TextDecorations="Underline"/>
 
-				<TextBlock FontSize="11" Text="Erstelle deinen eigenen Ort, wie z.B. deinen Kühlschrank, um zu beginnen." />
+				<TextBlock FontSize="11" Text="{x:Static strings:AppResources.CreateNewLocationDescription}" />
 			</StackPanel>
 
 
 			<Button Grid.Row="4" Grid.Column="0"
-					Content="Eintrag hinzufügen"
+					Content="{x:Static strings:AppResources.AddEntry}"
 					Command="{Binding NavigateToAddItemCommand}"
                     Background="#3d6dcc"
 					Foreground="White"
@@ -166,7 +167,7 @@
 					Margin="0,0,8,0"
 					Padding="8"/>
 			<Button Grid.Row="4" Grid.Column="1"
-					Content="Neuen Ort anlegen"
+					Content="{x:Static strings:AppResources.CreateNewLocation}"
 					Background="White"
 					BorderThickness="1"
 					BorderBrush="#3d6dcc"
