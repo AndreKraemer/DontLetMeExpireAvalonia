@@ -14,10 +14,10 @@
 	</Design.DataContext>
 	<ScrollViewer>
 		<Grid RowDefinitions="300,auto">
-			<Rectangle Grid.Row="0" Fill="AliceBlue" Height="300" />
+			<Rectangle Grid.Row="0" Fill="{DynamicResource ImageBackgroundBrush}" Height="300" />
 			<Button Grid.Row="0" Margin="16" HorizontalAlignment="Right" Content="{x:Static strings:AppResources.DeleteImage}" VerticalAlignment="Top"/>
 			<StackPanel Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center">
-				<Image Source="/Assets/avalonia-logo.ico" Height="48" Width="48"/>
+				<PathIcon Data="{StaticResource AddAPhoto}" Height="48" Width="48"/>
 				<TextBlock Text="{x:Static strings:AppResources.TapToAddImage}"/>
 			</StackPanel>
 			<StackPanel Grid.Row="1" Spacing="8" Margin="16">
@@ -31,7 +31,7 @@
 				<CalendarDatePicker SelectedDate="{Binding ExpirationDate}"/>
 				<TextBlock Margin="0,8,0,0" Text="{x:Static strings:AppResources.Amount}" />
 				<NumericUpDown  Value="{Binding Amount}" />
-				<Button Margin="0,8,0,0" Content="{x:Static strings:AppResources.Save}" Command="{Binding SaveCommand}" />
+				<Button Classes="Primary" Margin="0,8,0,0" Content="{x:Static strings:AppResources.Save}" Command="{Binding SaveCommand}" />
 			</StackPanel>
 		</Grid>
 

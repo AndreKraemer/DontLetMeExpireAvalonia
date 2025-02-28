@@ -8,7 +8,7 @@
 	<UserControl.Template>
 		<ControlTemplate>
 			<Border 
-					Background="White"
+					Background="{DynamicResource CardBackgroundBrush}"
 					BorderThickness="1"
 					BorderBrush="{TemplateBinding BorderColor}"
 					CornerRadius="8">
@@ -16,8 +16,9 @@
 					  ColumnDefinitions="*,*"
     				  Margin="8"
 					  RowDefinitions="Auto,*">
-					<Image Source="{TemplateBinding Icon}"
+					<PathIcon Data="{TemplateBinding Icon}"
 						   Height="40"
+						   Foreground="{TemplateBinding IconColor}"
 						   HorizontalAlignment="Left"/>
 					<!--  Anzeige der Anzahl der Einträge, rechtsbündig ausgerichtet  -->
 					<TextBlock

@@ -29,7 +29,7 @@
                             Grid.RowSpan="2"
 							Fill="#f5f7fa">
 					</Ellipse>
-					<Image Source="/Assets/avalonia-logo.ico"
+					<Image Source="/Assets/logo.ico"
 						   Width="48" Height="48"
 						   Grid.Row="0"
                             Grid.RowSpan="2"/>
@@ -39,19 +39,19 @@
 						Margin="8,0,0,0"
 						FontWeight="Bold"
 						Text="{Binding Name}"
-						Foreground="#141f33" />
+						Foreground="{DynamicResource CardForegroundBrush}" />
 					<TextBlock
 						Grid.Row="1"
 						Grid.Column="1"
 						Margin="8,0,0,0"
 						Text="{Binding ExpirationDate, Converter={x:Static converters:TypeConverters.DateToRelativeStringConverter}}"
-						Foreground="#141f33" />
+						Foreground="{DynamicResource CardForegroundBrush}" />
 					<TextBlock
 					   Grid.RowSpan="2"
 					   Grid.Column="2"
 					   FontSize="24"
 					   Text="›"
-					   Foreground="#141f33"
+					   Foreground="{DynamicResource CardForegroundBrush}"
 					   VerticalAlignment="Center" />
 					
 				</Grid>

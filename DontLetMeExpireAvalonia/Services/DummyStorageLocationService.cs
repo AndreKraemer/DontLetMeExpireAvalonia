@@ -14,8 +14,8 @@ public class DummyStorageLocationService : IStorageLocationService
     public DummyStorageLocationService(IItemService itemService)
     {
 
-        _storageLocations = [.. DummyData.Locations];
-        //_storageLocations = [];
+        //_storageLocations = [.. DummyData.Locations];
+        _storageLocations = [];
         _itemService = itemService;
     }
 

@@ -13,17 +13,17 @@ public static class DummyData
         new StorageLocation
         {
             Id = "f764f62e-d61c-48d4-ac2a-bcd8e1dce89e", Name = GetTranslation("Freezer", "Gefrierschrank"),
-            Icon = "\uf166"
+            Icon = "M440-80v-166L310-118l-56-56 186-186v-80h-80L174-254l-56-56 128-130H80v-80h166L118-650l56-56 186 186h80v-80L254-786l56-56 130 128v-166h80v166l130-128 56 56-186 186v80h80l186-186 56 56-128 130h166v80H714l128 130-56 56-186-186h-80v80l186 186-56 56-130-128v166h-80Z"
         },
         new StorageLocation
         {
             Id = "1ce2ed73-2353-496a-8381-82ac580dc16b", Name = GetTranslation("Refrigerator", "Kühlschrank"),
-            Icon = "\ueb47"
+            Icon = "M320-640v-120h80v120h-80Zm0 360v-200h80v200h-80ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h480q33 0 56.5 23.5T800-800v640q0 33-23.5 56.5T720-80H240Zm0-80h480v-360H240v360Zm0-440h480v-200H240v200Z"
         },
         new StorageLocation
         {
             Id = "fc01111d-1e47-406a-b695-04cf7bf4f521", Name = GetTranslation("Pantry", "Vorratsschrank"),
-            Icon = "\uf86e"
+            Icon = "M120-40v-880h80v80h560v-80h80v880h-80v-80H200v80h-80Zm80-480h80v-160h240v160h240v-240H200v240Zm0 320h240v-160h240v160h80v-240H200v240Zm160-320h80v-80h-80v80Zm160 320h80v-80h-80v80ZM360-520h80-80Zm160 320h80-80Z"
         }
     ];
 

@@ -10,6 +10,8 @@ using Microsoft.Extensions.DependencyInjection;
 using DontLetMeExpireAvalonia.Services;
 using System.Globalization;
 using System.Threading;
+using Avalonia.Svg.Skia;
+using System;
 
 namespace DontLetMeExpireAvalonia;
 
@@ -22,6 +24,10 @@ public partial class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
+
+        GC.KeepAlive(typeof(SvgImageExtension).Assembly);
+        GC.KeepAlive(typeof(Avalonia.Svg.Skia.Svg).Assembly);
+
         // DontLetMeExpireAvalonia.Resources.Strings.AppResources.Culture = new CultureInfo("en-US");
         //Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
         // Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US");

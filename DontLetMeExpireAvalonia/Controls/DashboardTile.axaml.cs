@@ -8,8 +8,8 @@ namespace DontLetMeExpireAvalonia.Controls;
 public partial class DashboardTile : UserControl
 {
 
-    public static readonly StyledProperty<IImage?> IconProperty = 
-        AvaloniaProperty.Register<DashboardTile, IImage?>(nameof(Icon));
+    public static readonly StyledProperty<StreamGeometry?> IconProperty = 
+        AvaloniaProperty.Register<DashboardTile, StreamGeometry?>(nameof(Icon));
 
     public static readonly StyledProperty<string> TextProperty = 
         AvaloniaProperty.Register<DashboardTile, string>(nameof(Text));
@@ -26,6 +26,9 @@ public partial class DashboardTile : UserControl
 
     public static readonly StyledProperty<IBrush?> BorderColorProperty = 
         AvaloniaProperty.Register<DashboardTile, IBrush?>(nameof(BorderColor), Brushes.Black);
+
+    public static readonly StyledProperty<IBrush?> IconColorProperty =
+    AvaloniaProperty.Register<DashboardTile, IBrush?>(nameof(IconColor), Brushes.Black);
 
     public DashboardTile()
     {
@@ -50,7 +53,14 @@ public partial class DashboardTile : UserControl
         set => SetValue(BorderColorProperty, value);
     }
 
-    public IImage? Icon
+
+    public IBrush? IconColor
+    {
+        get => GetValue(IconColorProperty);
+        set => SetValue(IconColorProperty, value);
+    }
+
+    public StreamGeometry? Icon
     {
         get => GetValue(IconProperty);
         set => SetValue(IconProperty, value);

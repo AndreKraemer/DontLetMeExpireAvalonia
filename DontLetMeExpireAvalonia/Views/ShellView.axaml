@@ -13,7 +13,7 @@
 		<vm:ShellViewModel/>
 	</Design.DataContext>
 	<DockPanel>
-		<Grid ColumnDefinitions="80,*" DockPanel.Dock="Top" Background="#f5f7fa">
+		<Grid ColumnDefinitions="80,*" DockPanel.Dock="Top" Background="{DynamicResource PageBackgroundBrush}">
 			<StackPanel Orientation="Horizontal" Spacing="4">
 			<Button Command="{Binding NavigateBackCommand}" Background="Transparent"
 					IsVisible="{Binding CanNavigateBack}">
@@ -23,13 +23,13 @@
 				<PathIcon Height="11" Data="{StaticResource Menu}"/>
 			</Button>
 			</StackPanel>
-			<TextBlock Text="{Binding Content.Title}" Grid.Column="1"/>
+			<TextBlock Text="{Binding Content.Title}" Grid.Column="1" VerticalAlignment="Center"/>
 		</Grid>
 	<SplitView IsPaneOpen="{Binding FlyoutIsPresented}"
 			   CompactPaneLength="40"
 			   OpenPaneLength="300"
 			   DisplayMode="Overlay"
-			   PaneBackground="#f5f7fa">
+			   PaneBackground="{DynamicResource PageBackgroundBrush}">
 		<SplitView.Pane>
 			<StackPanel>
 				<ListBox ItemsSource="{Binding FlyoutItems}" SelectedItem="{Binding ActiveFlyoutItem}">

@@ -11,11 +11,15 @@
   </ItemGroup>
   
   <ItemGroup>
+    <AvaloniaXaml Remove="Assets\AppResources.axaml" />
+    <AvaloniaXaml Remove="Assets\AppStyles.axaml" />
+    <AvaloniaXaml Remove="Assets\ColorResources.axaml" />
     <AvaloniaXaml Remove="Assets\Icons.axaml" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Avalonia" />
+    <PackageReference Include="Avalonia.Svg.Skia" />
     <PackageReference Include="Avalonia.Themes.Fluent" />
     <PackageReference Include="Avalonia.Fonts.Inter" />
     <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
@@ -28,6 +32,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <AvaloniaResource Update="Assets\AppResources.axaml">
+      <SubType>Designer</SubType>
+    </AvaloniaResource>
+    <AvaloniaResource Update="Assets\AppStyles.axaml">
+      <SubType>Designer</SubType>
+    </AvaloniaResource>
+    <AvaloniaResource Update="Assets\ColorResources.axaml">
+      <SubType>Designer</SubType>
+    </AvaloniaResource>
     <AvaloniaResource Update="Assets\Icons.axaml">
       <SubType>Designer</SubType>
     </AvaloniaResource>
