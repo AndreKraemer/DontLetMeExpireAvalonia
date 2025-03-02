@@ -13,6 +13,7 @@ using System.Threading;
 using Avalonia.Svg.Skia;
 using System;
 using DontLetMeExpireAvalonia.OpenFoodFacts;
+using Avalonia.Controls;
 
 namespace DontLetMeExpireAvalonia;
 
@@ -34,17 +35,13 @@ public partial class App : Application
         // Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US");
 
         // Configure IoC
-        var services = new ServiceCollection();
-        services.AddSingleton<INavigationService, NavigationService>();
-        services.AddSingleton<ShellViewModel>();
-        services.AddSingleton<IStorageLocationService, DummyStorageLocationService>();
-        services.AddSingleton<IItemService, DummyItemService>();
-        services.AddSingleton<IOpenFoodFactsApiClient, OpenFoodFactsApiClient>();
-        services.AddTransient<MainViewModel>();
-        services.AddTransient<ItemViewModel>();
-        services.AddTransient<ItemsViewModel>();
-        var provider = services.BuildServiceProvider();
-        Ioc.Default.ConfigureServices(provider);
+        if (Design.IsDesignMode)
+        {
+            var services = new ServiceCollection();
+            services.AddCommonServices();
+            var provider = services.BuildServiceProvider();
+            Ioc.Default.ConfigureServices(provider);
+        }
 
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
@@ -53,14 +50,14 @@ public partial class App : Application
             DisableAvaloniaDataAnnotationValidation();
             desktop.MainWindow = new MainWindow
             {
-                DataContext = provider.GetRequiredService<ShellViewModel>()
+                DataContext = Ioc.Default.GetRequiredService<ShellViewModel>()
             };
         }
         else if (ApplicationLifetime is ISingleViewApplicationLifetime singleViewPlatform)
         {
             singleViewPlatform.MainView = new ShellView
             {
-                DataContext = provider.GetRequiredService<ShellViewModel>()
+                DataContext = Ioc.Default.GetRequiredService<ShellViewModel>()
             };
         }
 

@@ -4,6 +4,8 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.iOS;
 using Avalonia.Media;
+using CommunityToolkit.Mvvm.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace DontLetMeExpireAvalonia.iOS;
 
@@ -17,6 +19,13 @@ public partial class AppDelegate : AvaloniaAppDelegate<App>
 {
     protected override AppBuilder CustomizeAppBuilder(AppBuilder builder)
     {
+        var services = new ServiceCollection();
+        services.AddCommonServices();
+
+        // Register Platform Services here
+
+        var provider = services.BuildServiceProvider();
+        Ioc.Default.ConfigureServices(provider);
         return base.CustomizeAppBuilder(builder)
             .WithInterFont();
     }

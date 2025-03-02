@@ -3,7 +3,9 @@ using Android.Content.PM;
 using Avalonia;
 using Avalonia.Android;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using DontLetMeExpireAvalonia.Services;
 using DontLetMeExpireAvalonia.ViewModels;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace DontLetMeExpireAvalonia.Android;
 
@@ -17,6 +19,12 @@ public class MainActivity : AvaloniaMainActivity<App>
 {
     protected override AppBuilder CustomizeAppBuilder(AppBuilder builder)
     {
+        var services = new ServiceCollection();
+        services.AddCommonServices();
+
+        var provider = services.BuildServiceProvider();
+        Ioc.Default.ConfigureServices(provider);
+
         return base.CustomizeAppBuilder(builder)
             .WithInterFont();
     }
