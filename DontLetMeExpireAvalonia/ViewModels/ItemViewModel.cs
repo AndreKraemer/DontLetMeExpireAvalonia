@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DontLetMeExpireAvalonia.Models;
+using DontLetMeExpireAvalonia.OpenFoodFacts;
 using DontLetMeExpireAvalonia.Services;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,7 @@ namespace DontLetMeExpireAvalonia.ViewModels
         private readonly IStorageLocationService _storageLocationService;
         private readonly IItemService _itemService;
         private readonly INavigationService _navigationService;
+        private readonly IOpenFoodFactsApiClient _openFoodFactsApiClient;
 
 
 
@@ -47,13 +49,19 @@ namespace DontLetMeExpireAvalonia.ViewModels
         [ObservableProperty]
         private string _id;
 
+        [ObservableProperty]
+        private string _searchText;
+
         public ItemViewModel(INavigationService navigationService,
                              IStorageLocationService storageLocationService,
-                             IItemService itemService)
+                             IItemService itemService,
+                             IOpenFoodFactsApiClient openFoodFactsApiClient)
         {
             _navigationService = navigationService;
             _storageLocationService = storageLocationService;
             _itemService = itemService;
+            _itemService = itemService;
+            _openFoodFactsApiClient = openFoodFactsApiClient;
         }
 
 
@@ -147,12 +155,31 @@ namespace DontLetMeExpireAvalonia.ViewModels
               && Amount > 0;
         }
 
-        
+        [RelayCommand]
+        private async Task SearchBarcode()
+        {
+            var response = await _openFoodFactsApiClient.GetProductByCodeAsync(SearchText);
+            if (response is { Status: 1, Product: not null })
+            {
+                Name = response.Product.ProductName!;
+
+                // Zu einem späteren Zeitpunkt das Bild herunterladen
+
+            }
+            else
+            {
+                // Zu einem späteren Zeitpunkt Fehlermeldung anzeigen
+            }
+        }
+
+
     }
 
     public class DesignTime_ItemViewModel : ItemViewModel
     {
-        public DesignTime_ItemViewModel() : base(new NavigationService(), new DummyStorageLocationService(new DummyItemService()), new DummyItemService())
+        public DesignTime_ItemViewModel() : base(new NavigationService(), 
+                                                 new DummyStorageLocationService(new DummyItemService()), 
+                                                 new DummyItemService(), new OpenFoodFactsApiClient())
         {
             InitializeAsync();
         }

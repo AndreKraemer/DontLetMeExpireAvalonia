@@ -12,6 +12,7 @@ using System.Globalization;
 using System.Threading;
 using Avalonia.Svg.Skia;
 using System;
+using DontLetMeExpireAvalonia.OpenFoodFacts;
 
 namespace DontLetMeExpireAvalonia;
 
@@ -38,6 +39,7 @@ public partial class App : Application
         services.AddSingleton<ShellViewModel>();
         services.AddSingleton<IStorageLocationService, DummyStorageLocationService>();
         services.AddSingleton<IItemService, DummyItemService>();
+        services.AddSingleton<IOpenFoodFactsApiClient, OpenFoodFactsApiClient>();
         services.AddTransient<MainViewModel>();
         services.AddTransient<ItemViewModel>();
         services.AddTransient<ItemsViewModel>();

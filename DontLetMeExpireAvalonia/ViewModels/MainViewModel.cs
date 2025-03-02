@@ -58,6 +58,7 @@ public partial class MainViewModel : ViewModelBase
         ExpiringSoonCount = (await _itemService.GetExpiresSoonAsync()).Count();
         ExpiresTodayCount = (await _itemService.GetExpiresTodayAsync()).Count();
         ExpiredCount = (await _itemService.GetExpiredAsync()).Count();
+        NavigateToAddItemCommand.NotifyCanExecuteChanged();
     }
 
     [RelayCommand]
@@ -100,10 +101,15 @@ public partial class MainViewModel : ViewModelBase
         await _navigationService.NavigateTo<ItemsViewModel>(navigationParams);
     }
 
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(CanNavigateToAddItem))]
     private async Task NavigateToAddItem()
     {
         await _navigationService.NavigateTo<ItemViewModel>();
+    }
+
+    private bool CanNavigateToAddItem()
+    {
+        return StorageLocations.Any();
     }
 
     [RelayCommand]

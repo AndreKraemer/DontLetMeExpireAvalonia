@@ -143,7 +143,7 @@
 
 				<TextBlock FontSize="11" Text="{x:Static strings:AppResources.SuggestedLocationsDescription}" />
 
-				<TextBlock Classes="mt-xs, link-label"
+				<TextBlock Classes="mt-xs link-label"
 						   Text="{x:Static strings:AppResources.StartWithSuggestedLocationsAndStock}"
 						   behaviors:TappedBehavior.Command="{Binding CreateSuggestedLocationsAndStockCommand}">
 
@@ -151,7 +151,7 @@
 
 				<TextBlock FontSize="11" Text="{x:Static strings:AppResources.SuggestedLocationsAndStockDescription}" />
 
-				<TextBlock Classes="mt-xs, link-label"
+				<TextBlock Classes="mt-xs link-label"
 						   Text="{x:Static strings:AppResources.CreateNewLocationLinkText}"/>
 
 				<TextBlock FontSize="11" Text="{x:Static strings:AppResources.CreateNewLocationDescription}" />
